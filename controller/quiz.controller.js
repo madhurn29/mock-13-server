@@ -19,4 +19,17 @@ const getQuiz = async (req, res) => {
     res.status(400).send({ message: error.message });
   }
 };
-module.exports = { postQuiz, getQuiz };
+
+const getQuizbyID = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    let quiz = await QuizModel.findById({ _id: id });
+    console.log(quiz);
+    res.status(200).send(quiz);
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = { postQuiz, getQuiz, getQuizbyID };
