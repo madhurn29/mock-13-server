@@ -9,7 +9,7 @@ const signup = async (req, res) => {
     let existing = await UserModel.findOne({ email });
 
     if (existing) {
-      res.send({ message: "Already registered in, Please log in" });
+      res.status(201).send({ message: "Already registered in, Please log in" });
     } else {
       try {
         bcrypt.hash(pass, saltRounds, async (err, hash) => {
@@ -17,7 +17,9 @@ const signup = async (req, res) => {
           try {
             let user = await new UserModel({ email, pass: hash });
             await user.save();
-            res.send({ message: "User has been Registered successfully" });
+            res
+              .status(200)
+              .send({ message: "User has been Registered successfully" });
           } catch (error) {
             res.status(400).send({ message: error.message });
           }
@@ -27,7 +29,7 @@ const signup = async (req, res) => {
       }
     }
   } else {
-    req.send({ message: "Enter all details" });
+    req.status(400).send({ message: "Enter all details" });
   }
 };
 
