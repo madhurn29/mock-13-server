@@ -8,13 +8,13 @@ app.use(express.json());
 app.use(cors());
 app.use("/user", userRouter);
 app.use("/quiz", quizRouter);
-
-app.listen(8080, async () => {
+require("dotenv").config();
+app.listen(process.env.port, async () => {
   try {
     await connection;
     console.log("Connected to DB");
   } catch (err) {
     console.log(err, "connecting to db...");
   }
-  console.log("server running on 8080");
+  console.log("server running on" + "" + process.env.port);
 });
